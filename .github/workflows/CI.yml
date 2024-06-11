@@ -4,11 +4,7 @@ on: [push, pull_request, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -107,3 +103,12 @@ jobs:
         meson build
         ninja -C build
         popd
+        
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v4.3.3
+      with:
+        name: vsplugin
+        # A file, directory or wildcard pattern that describes what to upload
+        path: ~/work/L-SMASH-Works/L-SMASH-Works
+
+          
