@@ -10,12 +10,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Install automake
-      if: ${{ matrix.os == 'macos-latest' }}
-      run: |
-        brew update
-        brew install automake
-
     - name: Setup Python
       uses: actions/setup-python@v3
       with:
@@ -58,23 +52,6 @@ jobs:
         popd
         rm -rf l-smash
 
-    - name: Install AviSynth
-      run: |
-        git clone https://github.com/AviSynth/AviSynthPlus --branch 3.7 --depth 1 avisynth-build
-        pushd avisynth-build
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DENABLE_PLUGINS=OFF -DENABLE_INTEL_SIMD=OFF
-        cmake --build build -j 2
-        sudo cmake --install build
-        popd
-        rm -rf avisynth-build
-
-    - name: Build AviSynth plugin
-      run: |
-        pushd AviSynth
-        meson build
-        ninja -C build
-        popd
-
     - name: Install zimg
       run: |
         git clone https://github.com/sekrit-twc/zimg --branch v3.0 --depth 1
@@ -109,6 +86,6 @@ jobs:
       with:
         name: vsplugin
         # A file, directory or wildcard pattern that describes what to upload
-        path: ~/work/L-SMASH-Works/L-SMASH-Works
+        path: ~/work/L-SMASH-Works/L-SMASH-Works/VapourSynth/build/libvslsmashsource.so
 
           
